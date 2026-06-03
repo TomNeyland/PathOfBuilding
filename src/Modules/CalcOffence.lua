@@ -274,22 +274,6 @@ local function setMoltenStrikeTertiaryRadiusBreakdown(breakdown, deadzoneRadius,
 	breakdownRadius.radius = currentDist
 end
 
--- Calculate and return reload time in seconds for a specific Crossbow skill
----@param weaponData table @weapon data for actor's crossbow
----@param boltSkill table @skill that uses the ammo to shoot bolts
----@return number?
-local function calcCrossbowReloadTime(weaponData, boltSkill)
-	local baseReloadTime = weaponData and weaponData.ReloadTime
-	if not baseReloadTime then
-		-- Some crossbows, such as Trarthan Cannon, cannot load or fire ammunition
-		-- and therefore intentionally have no reload time.
-		return nil
-	end
-
-	local reloadTimeMulti = calcLib.mod(boltSkill.skillModList, boltSkill.skillCfg, "ReloadSpeed", "Speed" )
-	return baseReloadTime / reloadTimeMulti
-end
-
 function calcSkillCooldown(skillModList, skillCfg, skillData)
 	local cooldownOverride = skillModList:Override(skillCfg, "CooldownRecovery")
 	local addedCooldown = skillModList:Sum("BASE", skillCfg, "CooldownRecovery")
